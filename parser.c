@@ -49,7 +49,7 @@ parser_process(const char * line, struct parser_statistics * data) {
 			data->unknown_success++;
 		}
 	} else if ((ptr = strstr(line, "Failed to update table "))) {
-	 if (strstr(ptr, "scanner")) {
+		if (strstr(ptr, "scanner")) {
 			data->scanner_failed++;
 		}
 		else if (strstr(ptr, "delivery")) {
@@ -59,10 +59,10 @@ parser_process(const char * line, struct parser_statistics * data) {
 			data->unknown_failed++;
 		}
 	} else if ((ptr = strstr(line, "Can't connect to MySQL server on "))) {
-    if (strstr(ptr, "[Errno 111] Connection refused")) {
-      data->conn_failed++;
-    }
-  } else {
+		if (strstr(ptr, "[Errno 111] Connection refused")) {
+			data->conn_failed++;
+		}
+	} else {
 		data->other++;
 	}
 }
