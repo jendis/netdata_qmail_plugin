@@ -88,6 +88,27 @@ append_queue_watcher(struct vector * v) {
 }
 
 static
+enum nd_err
+append_ratelimit_aggregator(struct vector * v) {
+	struct fs_watch watch;
+
+	memset(&watch, 0, sizeof watch);
+	watch.type = WATCH_DUMMY;
+	watch.watch_dir = -1;
+	watch.fd = -1;
+	watch.func = ratelimitspp_func;
+	watch.data = watch.func->init();
+
+	if (watch.data == NULL) {
+		return ND_ALLOC;
+	}
+
+	vector_add(v, &watch);
+
+	return ND_SUCCESS;
+}
+
+static
 void
 detect_log_dirs(const int fd, struct vector * v) {
 	struct dirent * dir_entry;
